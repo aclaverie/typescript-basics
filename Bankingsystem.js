@@ -18,6 +18,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 // Global variable to hold the registered Account users
 var globalRegisteredAccounts = [];
+var AccountType;
+(function (AccountType) {
+    AccountType[AccountType["Savings"] = 0] = "Savings";
+    AccountType[AccountType["FixedDeposit"] = 1] = "FixedDeposit";
+})(AccountType || (AccountType = {}));
 var Account = /** @class */ (function () {
     // Constructor to initialize the account details
     function Account(acctName, acctBalance, acctType) {
@@ -61,7 +66,7 @@ var Account = /** @class */ (function () {
 var SavingsAccount = /** @class */ (function (_super) {
     __extends(SavingsAccount, _super);
     function SavingsAccount(acctName, acctBalance) {
-        return _super.call(this, acctName, acctBalance, false) || this;
+        return _super.call(this, acctName, acctBalance, 0) || this;
     }
     // Overriding the deposit method  
     SavingsAccount.prototype.deposit = function (amount) {
@@ -75,7 +80,7 @@ var SavingsAccount = /** @class */ (function (_super) {
 var FixedAccount = /** @class */ (function (_super) {
     __extends(FixedAccount, _super);
     function FixedAccount(acctName, acctBalance) {
-        return _super.call(this, acctName, acctBalance, true) || this;
+        return _super.call(this, acctName, acctBalance, 1) || this;
     }
     // Overriding the deposit method
     FixedAccount.prototype.deposit = function (amount) {
@@ -115,11 +120,11 @@ for (var i = 0; i < globalRegisteredAccounts.length; i++) {
     var acctType = "";
     // Checking the account type and assigning the appropriate value to acctType
     switch (globalRegisteredAccounts[i].acctType) {
-        case true:
-            acctType = "Fixed Deposit";
+        case 0:
+            acctType = AccountType[globalRegisteredAccounts[i].acctType].toString();
             break;
-        case false:
-            acctType = "Savings";
+        case 1:
+            acctType = AccountType[globalRegisteredAccounts[i].acctType].toString();
             break;
     }
     // Displaying the account details

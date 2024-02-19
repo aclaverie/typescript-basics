@@ -5,71 +5,74 @@
 // Global variable to hold the registered Account users
 var globalRegisteredAccounts:Account[] = [];
 
+enum AccountType {
+  Savings = 0,
+  FixedDeposit = 1
+}
 class Account {
+  // Properties of the Account class
+  acctNumber: number;
+  acctName: string;
+  acctBalance: number;
+  acctType: number // 0 for Savings, 1 for Fixed Deposit
+  
+  // Constructor to initialize the account details
+  constructor(acctName: string, acctBalance: number, acctType: number){
+    this.acctNumber = this.getAcctNumber();
+    this.acctName = acctName;
+    this.acctBalance = acctBalance;
+    this.acctType = acctType;
+    console.log(acctName + " account created successfully");
+  }
 
-    // Properties of the Account class
-    acctNumber: number;
-    acctName: string;
-    acctBalance: number;
-    acctType: boolean; // 0 for Savings, 1 for Fixed Deposit
-    
-    // Constructor to initialize the account details
-    constructor(acctName: string, acctBalance: number, acctType: boolean){
-      this.acctNumber = this.getAcctNumber();
-      this.acctName = acctName;
-      this.acctBalance = acctBalance;
-      this.acctType = acctType;
-      console.log(acctName + " account created successfully");
+  // Method to generate account number
+  getAcctNumber(): number{
+    let aNum = Math.floor(Math.random() * 1000) + 1;
+    if(this.acctNumberCheck(aNum, globalRegisteredAccounts)){
+      return this.getAcctNumber();  
+    } else {        
+      return aNum;
     }
+  }
 
-    // Method to generate account number
-    getAcctNumber(): number{
-      let aNum = Math.floor(Math.random() * 1000) + 1;
-      if(this.acctNumberCheck(aNum, globalRegisteredAccounts)){
-        return this.getAcctNumber();  
-      } else {        
-        return aNum;
+  // Method to check if the account number already exists
+  acctNumberCheck(acctNumber: number, registeredUsers: any[]){
+    for(let i = 0; i < registeredUsers.length; i++){
+      if(acctNumber == registeredUsers[i]){
+          return true;
       }
     }
+    return false;
+  }
+  
+  // Method to deposit into the account
+  withdraw(amount: number){
+    this.acctBalance -= amount;
+  }
 
-    // Method to check if the account number already exists
-    acctNumberCheck(acctNumber: number, registeredUsers: any[]){
-      for(let i = 0; i < registeredUsers.length; i++){
-          if(acctNumber == registeredUsers[i]){
-              return true;
-          }
-      }
-      return false;
-    }
-    
-    // Method to deposit into the account
-    withdraw(amount: number){
-        this.acctBalance -= amount;
-    }
-
-    // Method to get the account balance
-    getBalance(){
-        return this.acctBalance;
-    }    
+  // Method to get the account balance
+  getBalance(){
+    return this.acctBalance;
+  }    
 }
 
 // Ideposit interface
 // This interface has a deposit method
 interface Ideposit {
-    deposit(amount: number);
+  deposit(amount: number);
 }
 
 // Savings Account class that extends Account class and implements Ideposit interface
 // Savings Account can only be created with any amount
 class SavingsAccount extends Account implements Ideposit{
-    constructor(acctName: string, acctBalance: number){
-        super(acctName, acctBalance, false);
-    }
+  constructor(acctName: string, acctBalance: number){
+    super(acctName, acctBalance, 0);
+  }
 
-    // Overriding the deposit method  
-    deposit(amount: number){
-        this.acctBalance += amount;
-    }    
+  // Overriding the deposit method  
+  deposit(amount: number){
+    this.acctBalance += amount;
+  }    
 }
 
 // Fixed Deposit Account class that extends Account class and implements Ideposit interface
@@ -77,7 +80,7 @@ class SavingsAccount extends Account implements Ideposit{
 // Fixed Deposit Account can only be deposited with a minimum of 1000
 class FixedAccount extends Account implements Ideposit{
   constructor(acctName: string, acctBalance: number){
-      super(acctName, acctBalance, true);
+    super(acctName, acctBalance, 1);
   }
 
   // Overriding the deposit method
@@ -125,10 +128,12 @@ for(let i = 0; i < globalRegisteredAccounts.length; i++){
   let acctType:string = "";
 
   // Checking the account type and assigning the appropriate value to acctType
-  switch(globalRegisteredAccounts[i].acctType){
-    case true: acctType = "Fixed Deposit";
+  switch(globalRegisteredAccounts[i].acctType){    
+    case 0: acctType = AccountType[globalRegisteredAccounts[i].acctType].toString();
     break;
-    case false: acctType = "Savings";
+    case 1: acctType = AccountType[globalRegisteredAccounts[i].acctType].toString();
+    break;
+    default: acctType = "Invalid Account Type";
     break;
   }
 
