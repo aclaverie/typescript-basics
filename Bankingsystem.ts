@@ -37,12 +37,13 @@ class Account {
 
   // Method to check if the account number already exists
   acctNumberCheck(acctNumber: number, registeredUsers: any[]){
-    for(let i = 0; i < registeredUsers.length; i++){
-      if(acctNumber == registeredUsers[i]){
-          return true;
+    let found = false;
+    registeredUsers.forEach((user) => {
+      if(user.acctNumber == acctNumber){
+        found = true;
       }
-    }
-    return false;
+    });
+    return found;
   }
   
   // Method to deposit into the account
@@ -122,16 +123,15 @@ fixedAcct.deposit(1000);
 console.log(savingsAcct.acctName + " account Balance: " + savingsAcct.getBalance());
 
 // Looping through the global account registered users to display the account details
-for(let i = 0; i < globalRegisteredAccounts.length; i++){
+globalRegisteredAccounts.forEach((account) => {
   
   // Variable to hold the account type
   let acctType:string = "";
-
+  
   // Checking the account type and assigning the appropriate value to acctType
-  switch(globalRegisteredAccounts[i].acctType){    
-    case 0: acctType = AccountType[globalRegisteredAccounts[i].acctType].toString();
-    break;
-    case 1: acctType = AccountType[globalRegisteredAccounts[i].acctType].toString();
+  switch(account.acctType){    
+    case 0: 
+    case 1: acctType = AccountType[account.acctType].toString();
     break;
     default: acctType = "Invalid Account Type";
     break;
@@ -139,8 +139,8 @@ for(let i = 0; i < globalRegisteredAccounts.length; i++){
 
   // Displaying the account details
   console.log(
-    "Account Number: " + globalRegisteredAccounts[i].acctNumber + " \t " + 
-    "Account Name: " + globalRegisteredAccounts[i].acctName + " \t " + 
-    "Account Balance: " + globalRegisteredAccounts[i].acctBalance + " \t " + 
+    "Account Number: " + account.acctNumber + " \t " + 
+    "Account Name: " + account.acctName + " \t " + 
+    "Account Balance: " + account.acctBalance + " \t " + 
     "Account Type: " +  acctType);
-}
+});
