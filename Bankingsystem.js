@@ -1,6 +1,6 @@
 // Purpose: A simple banking system that allows for the creation of Savings and Fixed Deposit accounts
 // Author: Anthony V. Claverie
-// Last Modified: 2021-08-10
+// Last Modified: 2024-19-02
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -30,7 +30,7 @@ var Account = /** @class */ (function () {
         this.acctName = acctName;
         this.acctBalance = acctBalance;
         this.acctType = acctType;
-        console.log(acctName + " account created successfully");
+        console.log("".concat(acctName, " account created successfully"));
     }
     // Method to generate account number
     Account.prototype.getAcctNumber = function () {
@@ -55,6 +55,7 @@ var Account = /** @class */ (function () {
     // Method to deposit into the account
     Account.prototype.withdraw = function (amount) {
         this.acctBalance -= amount;
+        console.log("Success! New account balance: ".concat(this.acctBalance));
     };
     // Method to get the account balance
     Account.prototype.getBalance = function () {
@@ -67,11 +68,12 @@ var Account = /** @class */ (function () {
 var SavingsAccount = /** @class */ (function (_super) {
     __extends(SavingsAccount, _super);
     function SavingsAccount(acctName, acctBalance) {
-        return _super.call(this, acctName, acctBalance, 0) || this;
+        return _super.call(this, acctName, acctBalance, AccountType.Savings) || this;
     }
     // Overriding the deposit method  
     SavingsAccount.prototype.deposit = function (amount) {
         this.acctBalance += amount;
+        console.log("Success! New account balance: ".concat(this.acctBalance));
     };
     return SavingsAccount;
 }(Account));
@@ -81,15 +83,16 @@ var SavingsAccount = /** @class */ (function (_super) {
 var FixedAccount = /** @class */ (function (_super) {
     __extends(FixedAccount, _super);
     function FixedAccount(acctName, acctBalance) {
-        return _super.call(this, acctName, acctBalance, 1) || this;
+        return _super.call(this, acctName, acctBalance, AccountType.FixedDeposit) || this;
     }
     // Overriding the deposit method
     FixedAccount.prototype.deposit = function (amount) {
         if (amount >= 1000) {
             this.acctBalance += amount;
+            console.log("Success! New account balance: ".concat(this.acctBalance));
         }
         else {
-            console.log("You cannot deposit less than 1000");
+            console.log("You cannot deposit less than 1000.");
         }
     };
     return FixedAccount;
@@ -98,14 +101,14 @@ var FixedAccount = /** @class */ (function (_super) {
 var savingsAcct = new SavingsAccount('John', 1000);
 // Adding the created account to the global account registered users
 globalRegisteredAccounts.push(savingsAcct);
-var savingsAcct2 = new SavingsAccount('Jane', 2000);
+var savingsAcct2 = new SavingsAccount('Jane M', 2000);
 globalRegisteredAccounts.push(savingsAcct2);
-var savingsAcct3 = new SavingsAccount('Jude', 3000);
+var savingsAcct3 = new SavingsAccount('Jude L', 3000);
 globalRegisteredAccounts.push(savingsAcct3);
-var savingsAcct4 = new SavingsAccount('Jude', 3000);
+var savingsAcct4 = new SavingsAccount('Jude M', 3000);
 globalRegisteredAccounts.push(savingsAcct4);
 // Creating an instance of Fixed Deposit Account
-var fixedAcct = new FixedAccount('Jane', 2000);
+var fixedAcct = new FixedAccount('Jane M', 2000);
 // Adding the created account to the global account registered users
 globalRegisteredAccounts.push(fixedAcct);
 // Depositing and Withdrawing from the created accounts
@@ -114,7 +117,8 @@ savingsAcct.withdraw(100);
 fixedAcct.deposit(200);
 fixedAcct.deposit(1000);
 // Displaying the account details
-console.log(savingsAcct.acctName + " account Balance: " + savingsAcct.getBalance());
+var balance = savingsAcct.getBalance();
+console.log("".concat(savingsAcct.acctName, " account Balance: ").concat(balance));
 // Looping through the global account registered users to display the account details
 globalRegisteredAccounts.forEach(function (account) {
     // Variable to hold the account type
@@ -130,8 +134,5 @@ globalRegisteredAccounts.forEach(function (account) {
             break;
     }
     // Displaying the account details
-    console.log("Account Number: " + account.acctNumber + " \t " +
-        "Account Name: " + account.acctName + " \t " +
-        "Account Balance: " + account.acctBalance + " \t " +
-        "Account Type: " + acctType);
+    console.log("\n  Account Number: ".concat(account.acctNumber, " \t \n  Account Name: ").concat(account.acctName, " \t \n  Account Balance: ").concat(account.acctBalance, " \t \n  Account Type: ").concat(acctType));
 });
