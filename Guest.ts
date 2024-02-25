@@ -1,7 +1,11 @@
-export class User {
+import { User } from './User';
+
+//some how the implements not working.
+class Guest implements User {
   firstName: string;
   lastName: string;
   email: string;
+  role: string;
   private _isSet: boolean;
   createdOn: Date;
 
@@ -9,6 +13,7 @@ export class User {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = this.setEmailCheck(email);
+    this.addRole('Guest');
   }
 
   set isSet(value: boolean){
@@ -36,22 +41,12 @@ export class User {
   EmailCompare(email: string): boolean {
     return this.email === email;
   }
+  
+  addRole(role: string){
+    this.role = 'Guest';
+  }  
 }
 
-const user1 = new User('John', 'Doe', 'john@xyz.com');
-const user2 = new User('Jane', 'Doe', 'jane.cloud.com');
-
-console.log(user1.fullName);
-console.log(user2.fullName);
-
-console.log(user1.email);
-console.log(user2.email);
-
-console.log(user1.isSet);
-console.log(user2.isSet);
-
-console.log(user1.createdOn);
-console.log(user2.createdOn);
-
-console.log(user1.EmailCompare('jon@xyz.com'));
-console.log(user2.EmailCompare('jane.cloud.com'));
+const guest1 = new Guest('Jane', 'Doe', 'jane@xyz.com');
+console.log(guest1.fullName);
+console.log(guest1.role);

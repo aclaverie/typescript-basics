@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
-var User = /** @class */ (function () {
-    function User(firstName, lastName, email) {
+var Guest = /** @class */ (function () {
+    function Guest(firstName, lastName, email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = this.setEmailCheck(email);
+        this.addRole('Guest');
     }
-    Object.defineProperty(User.prototype, "isSet", {
+    Object.defineProperty(Guest.prototype, "isSet", {
         get: function () {
             return this._isSet;
         },
@@ -18,14 +18,14 @@ var User = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(User.prototype, "fullName", {
+    Object.defineProperty(Guest.prototype, "fullName", {
         get: function () {
             return "".concat(this.firstName, " ").concat(this.lastName);
         },
         enumerable: false,
         configurable: true
     });
-    User.prototype.setEmailCheck = function (email) {
+    Guest.prototype.setEmailCheck = function (email) {
         if (email.includes('@')) {
             this.isSet = true;
             return email;
@@ -34,21 +34,14 @@ var User = /** @class */ (function () {
             return 'Invalid email';
         }
     };
-    User.prototype.EmailCompare = function (email) {
+    Guest.prototype.EmailCompare = function (email) {
         return this.email === email;
     };
-    return User;
+    Guest.prototype.addRole = function (role) {
+        this.role = 'Guest';
+    };
+    return Guest;
 }());
-exports.User = User;
-var user1 = new User('John', 'Doe', 'john@xyz.com');
-var user2 = new User('Jane', 'Doe', 'jane.cloud.com');
-console.log(user1.fullName);
-console.log(user2.fullName);
-console.log(user1.email);
-console.log(user2.email);
-console.log(user1.isSet);
-console.log(user2.isSet);
-console.log(user1.createdOn);
-console.log(user2.createdOn);
-console.log(user1.EmailCompare('jon@xyz.com'));
-console.log(user2.EmailCompare('jane.cloud.com'));
+var guest1 = new Guest('Jane', 'Doe', 'jane@xyz.com');
+console.log(guest1.fullName);
+console.log(guest1.role);
