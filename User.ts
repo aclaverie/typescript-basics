@@ -1,8 +1,8 @@
-export class User {
+export default class User {
   firstName: string;
   lastName: string;
   email: string;
-  private _isSet: boolean;
+  _isSet: boolean;
   createdOn: Date;
 
   constructor(firstName: string, lastName: string, email: string){

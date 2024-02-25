@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+//some how the implements not working.
 var Guest = /** @class */ (function () {
     function Guest(firstName, lastName, email) {
         this.firstName = firstName;
@@ -27,7 +28,6 @@ var Guest = /** @class */ (function () {
     });
     Guest.prototype.setEmailCheck = function (email) {
         if (email.includes('@')) {
-            this.isSet = true;
             return email;
         }
         else {
@@ -38,10 +38,10 @@ var Guest = /** @class */ (function () {
         return this.email === email;
     };
     Guest.prototype.addRole = function (role) {
-        this.role = 'Guest';
+        this._role = role;
     };
     return Guest;
 }());
-var guest1 = new Guest('Jane', 'Doe', 'jane@xyz.com');
+var guest1 = new Guest('John', 'Doe', 'jane@xyz.com');
 console.log(guest1.fullName);
-console.log(guest1.role);
+console.log(guest1._role);

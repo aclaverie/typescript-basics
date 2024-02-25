@@ -1,28 +1,27 @@
-import { User } from './User';
+import User  from './User';
 
 //some how the implements not working.
 class Guest implements User {
   firstName: string;
   lastName: string;
   email: string;
-  role: string;
-  private _isSet: boolean;
+  _role: string;
+  _isSet: boolean;
+  set isSet(value: boolean) {
+    this.createdOn = new Date();
+    this._isSet = value;
+  }
+  get isSet(): boolean {
+    return this._isSet; 
+  }
+    
   createdOn: Date;
 
   constructor(firstName: string, lastName: string, email: string){
     this.firstName = firstName;
     this.lastName = lastName;
-    this.email = this.setEmailCheck(email);
+    this.email = this.setEmailCheck(email);    
     this.addRole('Guest');
-  }
-
-  set isSet(value: boolean){
-    this.createdOn = new Date();
-    this._isSet = value;
-  }
-
-  get isSet(): boolean {
-    return this._isSet;
   }
 
   get fullName(): string {
@@ -30,8 +29,7 @@ class Guest implements User {
   }
 
   setEmailCheck(email): string {
-    if(email.includes('@')){ 
-      this.isSet = true;     
+    if(email.includes('@')){     
       return email;
     } else {
       return 'Invalid email';
@@ -43,10 +41,10 @@ class Guest implements User {
   }
   
   addRole(role: string){
-    this.role = 'Guest';
+    this._role = role;
   }  
 }
 
-const guest1 = new Guest('Jane', 'Doe', 'jane@xyz.com');
+const guest1 = new Guest( 'John', 'Doe', 'jane@xyz.com');
 console.log(guest1.fullName);
-console.log(guest1.role);
+console.log(guest1._role);

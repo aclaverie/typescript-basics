@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
 var User = /** @class */ (function () {
     function User(firstName, lastName, email) {
         this.firstName = firstName;
@@ -39,7 +38,7 @@ var User = /** @class */ (function () {
     };
     return User;
 }());
-exports.User = User;
+exports.default = User;
 var user1 = new User('John', 'Doe', 'john@xyz.com');
 var user2 = new User('Jane', 'Doe', 'jane.cloud.com');
 console.log(user1.fullName);
