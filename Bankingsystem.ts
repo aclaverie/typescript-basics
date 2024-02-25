@@ -61,7 +61,7 @@ class Account {
 // Ideposit interface
 // This interface has a deposit method
 interface Ideposit{
-  deposit(amount: number);
+  deposit(amount: number): void;
 }
 
 // Savings Account class that extends Account class and implements Ideposit interface
